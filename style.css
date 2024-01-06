@@ -7,10 +7,9 @@
 body {
   background-color: #476162;
   background-image: linear-gradient(131deg, #2C3B3B, #476162, #3A6E70);
-  height: 600px;
+  height: 650px;
   text-align: left;
   color: #dce8e8;
-  padding-top: 50px;
   padding-right: 50px;
   padding-bottom: 50px;
   padding-left: 50px;
@@ -19,9 +18,13 @@ body {
 header {
   height: auto;
   background-color: transparent;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 50px;
+  padding-bottom: 20px;
   overflow: visible;
+}
+
+a {
+  color: #dce8e8;
 }
 
 .one_liner {
@@ -37,5 +40,29 @@ header {
 }
 
 .beehiiv_embed {
-  padding-top: 30px;
+  padding-top: 20px;
 }
+
+.stats {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  max-width: 470px;
+  color: #476162;
+  background-color: #dce8e8;
+  border-radius: 20px;
+}
+
+p.stats_line {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+ul.stats_list {
+  padding-left: 35px;
+  padding-right: 15px;
+}
+
+.bottom {
+  padding-top: 20px;
+}
+
