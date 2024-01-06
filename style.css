@@ -1,6 +1,7 @@
 * {
   margin: 0px;
   padding: 0px;
+  font-family: 'Chakra Petch', sans-serif;
 }
 
 body {
@@ -23,7 +24,7 @@ header {
   overflow: visible;
 }
 
-.one_liner p {
+.one_liner {
   padding-top: 20px;
 }
 
