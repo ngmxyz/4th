@@ -1,6 +1,6 @@
 * {
-  margin: 30px;
-  padding: 30px;
+  margin: 0px;
+  padding: 0px;
   background-color: #476162;
   background-image: linear-gradient(131deg, #2C3B3B, #476162, #3A6E70);
 }
@@ -8,4 +8,9 @@
 body {
   text-align: left;
   color: #dce8e8;
+  background-color: transparent;
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+  padding-left: 80px;
 }
