@@ -29,14 +29,17 @@ a {
 
 .one_liner {
   padding-top: 20px;
+  text-align: left;
 }
 
 .another_one_liner p {
   padding-top: 20px;
+  text-align: left;
 }
 
 .call_action p {
   padding-top: 20px;
+  text-align: left;
 }
 
 .beehiiv_embed {
@@ -50,7 +53,7 @@ a {
   color: #476162;
   background-color: #dce8e8;
   border-radius: 20px;
-  text-align: center;
+  text-align: left;
 }
 
 p.stats_line {
