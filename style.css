@@ -1,11 +1,11 @@
 * {
   margin: 0;
   padding: 0;
+  background-color: #476162;
+  background-image: linear-gradient(131deg, #2C3B3B, #476162, #3A6E70);
 }
 
 body {
-  background-color: #476162;
-  background-image: linear-gradient(131deg, #2C3B3B, #476162, #3A6E70);
   text-align: left;
   color: #dce8e8;
   padding-left: 30px;
