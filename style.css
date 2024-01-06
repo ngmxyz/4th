@@ -1,0 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #476162;
+  background-image: linear-gradient(130deg, #2C3B3B, #476162, #3A6E70);
+  text-align: center;
+}
