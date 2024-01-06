@@ -1,17 +1,40 @@
 * {
   margin: 0px;
   padding: 0px;
-  background-color: #476162;
-  background-image: linear-gradient(131deg, #2C3B3B, #476162, #3A6E70);
 }
 
 body {
-  height: 500px;
-  background-color: transparent;
+  background-color: #476162;
+  background-image: linear-gradient(131deg, #2C3B3B, #476162, #3A6E70);
+  height: 600px;
   text-align: left;
   color: #dce8e8;
   padding-top: 50px;
-  padding-right: 30px;
+  padding-right: 50px;
   padding-bottom: 50px;
-  padding-left: 80px;
+  padding-left: 50px;
+}
+
+header {
+  height: auto;
+  background-color: transparent;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  overflow: visible;
+}
+
+.one_liner p {
+  padding-top: 20px;
+}
+
+.another_one_liner p {
+  padding-top: 20px;
+}
+
+.call_action p {
+  padding-top: 20px;
+}
+
+.beehiiv_embed {
+  padding-top: 30px;
 }
