@@ -3,17 +3,17 @@
   padding: 0;
 }
 
-header {
-  height: 100px;
+body {
+  background-color: #476162;
+  background-image: linear-gradient(131deg, #2C3B3B, #476162, #3A6E70);
+  text-align: left;
+  color: #dce8e8;
   padding-left: 30px;
   padding-top: 30px;
   padding-right: 30px;
   padding-bottom: 30px;
 }
 
-body {
-  background-color: #476162;
-  background-image: linear-gradient(131deg, #2C3B3B, #476162, #3A6E70);
-  text-align: left;
-  color: #dce8e8;
+header {
+  height: 100px;
 }
