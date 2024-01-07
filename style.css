@@ -7,7 +7,7 @@
 body {
   background-color: #476162;
   background-image: linear-gradient(131deg, #2C3B3B, #476162, #3A6E70);
-  height: 650px;
+  height: auto;
   text-align: left;
   color: #dce8e8;
   padding-right: 25px;
@@ -66,4 +66,12 @@ ul.stats_list {
   padding-left: 35px;
   padding-right: 15px;
   padding-top: 15px;
+}
+
+h1.folks_line {
+  padding-top: 20px;
+}
+
+.folks_list {
+  padding-top: 10px;
 }
