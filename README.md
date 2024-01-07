@@ -7,8 +7,7 @@ This GitHub repository is for a project of mine called The 4th List. Every week,
 Yes, building this from scratch in GitHub Pages was totally unnecessary. I felt like it would be a bit more fun to learn to code this way :)
 
 Some sub-projects I want to build for this and their statuses:
-+Subscriber website: MVP live 1.6.24 (https://ngmxyz.github.io/4th/)
-+Internal database for keeping track of all the companies: Transitioned to internal MVP 1.7.24
-+Scraping investor websites & social media interactions for new companies: eventually
-+
+* Subscriber website: MVP live 1.6.24 (https://ngmxyz.github.io/4th/)
+* Internal database for keeping track of all the companies: Transitioned to internal MVP 1.7.24
+* Scraping investor websites & social media interactions for new companies: eventually
 
