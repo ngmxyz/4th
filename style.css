@@ -25,6 +25,7 @@ header {
 footer {
   height: auto;
   padding-top: 100px;
+  padding-bottom: 250px;
 }
 
 .column {
