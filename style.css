@@ -18,9 +18,13 @@ body {
 header {
   height: auto;
   background-color: transparent;
-  padding-top: 50px;
-  padding-bottom: 20px;
+  padding-top: 30px;
   overflow: visible;
+}
+
+footer {
+  height: auto;
+  padding-top: 20px;
 }
 
 a {
@@ -41,6 +45,7 @@ a {
 
 .beehiiv_embed {
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .stats {
@@ -62,8 +67,3 @@ ul.stats_list {
   padding-right: 15px;
   padding-top: 15px;
 }
-
-.bottom {
-  padding-top: 20px;
-}
-
