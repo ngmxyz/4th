@@ -2,6 +2,13 @@
 
 I research early-stage technologies that are working on the defense industrial base. 
 
-This GitHub repository is for a project of mine called The 4th List. I felt like an interesting project would be to try and get as many of these companies as I could in front of investors that care, so automating a distribution list seemed easy and worthwhile.
+This GitHub repository is for a project of mine called The 4th List. Every week, I send out a list of the companies I come across to investors. That list includes the names of the companies, a one sentence description of what they are building, and a one sentence description of any publicly available fundraising information (i.e. "they raised a $xM Seed from this investor and this investor in Q2 of 2023").
 
-This isn't a newsletter, since there isn't any commentary or news... it is literally just a list of a few companies, a one sentence description of what they build, and a one sentence overview of any publicly available information about their funding.
+Yes, building this from scratch in GitHub Pages was totally unnecessary. I felt like it would be a bit more fun to learn to code this way :)
+
+Some sub-projects I want to build for this and their statuses:
++Subscriber website: MVP live 1.6.24 (https://ngmxyz.github.io/4th/)
++Internal database for keeping track of all the companies: Transitioned to internal MVP 1.7.24
++Scraping investor websites & social media interactions for new companies: eventually
++
+
