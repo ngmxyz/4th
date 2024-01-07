@@ -104,4 +104,5 @@ h1.folks_line {
 
 .home_photo_css {
   padding-top: 20px;
+  overflow: hidden;
 }
