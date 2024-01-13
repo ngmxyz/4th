@@ -95,19 +95,19 @@ ul.stats_list {
 }
 
 h1.folks_line {
-  padding-top: 10px;
+  padding-top: 20px;
 }
 
 .folks_list {
   padding-top: 10px;
 }
 
-iframe.airtable-embed {
-  
+.teams_airtable_h1 {
+  padding-top: 10px;
 }
 
 .teams_airtable {
-  padding-top: 20px;
+  padding-top: 10px;
   max-width: 880px;
   padding-right: 20px;
 }
