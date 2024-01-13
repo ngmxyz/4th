@@ -101,3 +101,11 @@ h1.folks_line {
 .folks_list {
   padding-top: 10px;
 }
+
+iframe.airtable-embed {
+  
+}
+
+.teams_airtable {
+  padding-top: 20px;
+}
