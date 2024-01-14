@@ -2,36 +2,35 @@
   margin: 0px;
   padding: 0px;
   font-family: 'Chakra Petch', sans-serif;
+  background: #dce8e8;
 }
 
 body {
-  background-color: #476162;
-  background-image: linear-gradient(120deg, #476162, #476162, #6C8384, #B7C6C7, #dce8e8);
-  height: auto;
+  height: 100%;
   text-align: left;
-  color: #dce8e8;
+  color: #476162;
   padding-right: 25px;
-  padding-bottom: 50px;
+  padding-bottom: 1px;
   padding-left: 25px;
 }
 
 header {
   height: auto;
   background-color: transparent;
-  padding-top: 30px;
+  padding-top: 50px;
   overflow: visible;
 }
 
 footer {
   height: auto;
-  padding-top: 100px;
-  padding-bottom: 200px;
+  padding-top: 50px;
+  padding-bottom: 20px;
 }
 
 .column {
   float: left;
   width: 40%;
-  padding-right: 25px;
+  padding-right: 50px;
 }
 
 .row:after {
@@ -47,54 +46,21 @@ footer {
 }
 
 a {
-  color: #dce8e8;
+  color: #476162;
 }
 
-.home_menu {
-  padding-top: 20px;
-  background-color: red;
-  height: 100%;
-}
 
 .one_liner {
   padding-top: 20px;
-}
-
-.another_one_liner p {
-  padding-top: 20px;
-}
-
-.call_action p {
-  padding-top: 20px;
+    max-width: 400px;
 }
 
 .beehiiv_embed {
   padding-top: 20px;
-  padding-bottom: 20px;
   padding-right: 20px;
 }
 
-.stats {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  max-width: 470px;
-  color: #476162;
-  background-color: #dce8e8;
-  border-radius: 20px;
-}
-
-p.stats_line {
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-ul.stats_list {
-  padding-left: 35px;
-  padding-right: 15px;
-  padding-top: 15px;
-}
-
-h3.folks_line {
+h2.folks_line {
   padding-top: 20px;
 }
 
@@ -102,7 +68,7 @@ h3.folks_line {
   padding-top: 10px;
 }
 
-.teams_airtable_h1 {
+.teams_airtable_h2 {
   padding-top: 10px;
 }
 
