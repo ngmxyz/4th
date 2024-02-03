@@ -6,3 +6,4 @@ This GitHub repository is for a project of mine called The 4th List. Every week,
 
 Assuming literacy, each issue takes about 45 seconds to read.
 
+Feel free to subscribe: www.4th.industries
