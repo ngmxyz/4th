@@ -1,98 +1,335 @@
 <!DOCTYPE html>
-<html>
-  
-  <head>
-    <title>4th Industries</title>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOTES // TERMINAL</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-<!-- STARTS Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N4EK9BEKDG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  gtag('config', 'G-N4EK9BEKDG');
-</script>
-<!-- ENDS Google tag (gtag.js) -->
-    
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="./style.css" rel="stylesheet">
-    
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-    
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300&display=swap" rel="stylesheet">
+  :root {
+    --bg: #0e0e0e;
+    --panel: #141414;
+    --border: #4a7a4a;
+    --text: #a3c9a3;
+    --dim: #4a6b4a;
+    --hover: #1a221a;
+    --active: #1e2e1e;
+    --glow: rgba(100,140,100,0.08);
+  }
+
+  body {
+    font-family: 'Share Tech Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  /* Scanline overlay */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* CRT flicker */
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 1; }
+    93% { opacity: 0.85; }
+    94% { opacity: 1; }
+    96% { opacity: 0.9; }
+    97% { opacity: 1; }
+  }
+  .crt { animation: flicker 4s infinite; }
+
+
+
+  /* Top bar */
+  .topbar {
+    border-bottom: 1px solid var(--border);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--panel);
+    box-shadow: 0 0 10px var(--glow);
+    flex-shrink: 0;
+  }
+  .topbar .dots { display: flex; gap: 6px; }
+  .topbar .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--dim);
+    background: transparent;
+  }
+  .topbar .title { font-size: 13px; color: var(--dim); letter-spacing: 2px; text-transform: uppercase; }
+
+  /* Main layout */
+  .main {
+    display: flex;
+    height: calc(100vh - 41px);
+  }
+
+  /* Left panel - note list */
+  .list-panel {
+    width: 380px;
+    min-width: 280px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    background: var(--panel);
+    box-shadow: 2px 0 12px var(--glow);
+  }
+  .list-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--dim);
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .note-list { flex: 1; overflow-y: auto; }
+  .note-list::-webkit-scrollbar { width: 6px; }
+  .note-list::-webkit-scrollbar-track { background: var(--bg); }
+  .note-list::-webkit-scrollbar-thumb { background: var(--dim); }
+
+  .note-item {
+    padding: 14px 16px;
+    border-bottom: 1px solid #1a2a1a;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .note-item:hover { background: var(--hover); }
+  .note-item.active { background: var(--active); border-left: 3px solid var(--border); }
+  .note-item .note-date { font-size: 10px; color: var(--dim); margin-bottom: 4px; }
+  .note-item .note-title { font-size: 13px; color: var(--text); }
+
+  /* Right panel - reading pane */
+  .read-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .read-header {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--dim);
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--panel);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .back-btn {
+    display: inline-flex;
+    padding: 4px 10px;
+    font-family: inherit;
+    font-size: 11px;
+    color: var(--dim);
+    background: none;
+    border: 1px solid var(--dim);
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .back-btn:hover { background: var(--hover); color: var(--text); border-color: var(--border); }
+  .read-content {
+    flex: 1;
+    padding: 32px 48px;
+    overflow-y: auto;
+    max-width: 700px;
+  }
+  .read-content::-webkit-scrollbar { width: 6px; }
+  .read-content::-webkit-scrollbar-track { background: var(--bg); }
+  .read-content::-webkit-scrollbar-thumb { background: var(--dim); }
+
+  .read-content .empty { color: var(--dim); font-size: 13px; margin-top: 40px; }
+  .read-content .entry-date { font-size: 11px; color: var(--dim); margin-bottom: 12px; }
+  .read-content .entry-title { font-size: 18px; color: var(--text); margin-bottom: 24px; border-bottom: 1px solid var(--dim); padding-bottom: 12px; }
+  .read-content .entry-body { font-size: 13px; line-height: 1.8; color: var(--text); white-space: pre-wrap; }
+
+  /* ─── MOBILE ─── */
+  .back-btn {
+    display: none;
+    padding: 10px 16px;
+    font-family: inherit;
+    font-size: 12px;
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--dim);
+    cursor: pointer;
+    margin: 12px 16px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    align-self: flex-start;
+  }
+  .back-btn:hover { background: var(--hover); }
+
+  @media (max-width: 640px) {
+    body { overflow: auto; }
+    .main { flex-direction: column; height: auto; min-height: calc(100vh - 41px); }
+    .list-panel {
+      width: 100%;
+      min-width: unset;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      box-shadow: none;
+    }
+    .note-list { max-height: 50vh; }
+    .read-panel { flex: none; min-height: 50vh; }
+    .read-content { padding: 24px 20px; max-width: 100%; }
+
+    /* Mobile detail view mode */
+    .mobile-detail .list-panel { display: none; }
+    .mobile-detail .read-panel { min-height: calc(100vh - 41px); }
+    .mobile-detail .back-btn { display: flex; }
+  }
+</style>
 </head>
+<body class="crt">
 
-  
-<body> 
-
-
-
-<div class="home_contents">
-  
-<h1 class="home_contents_1">The 4th List</h1>
-  
-<p class="home_contents_2">Weekly-ish list of 4 startups working on the American industrial base. No news, just companies. Most Tuesdays. For investors and founders. Get the list below.</p>
-  
-<!-- ALL COLUMNS BEGIN --> <div class="row">
-    
-<!-- COLUMN 1 BEGINS --> <div class="column">
-    
-    <div class="beehiiv_embed">
-    <iframe src="https://embeds.beehiiv.com/06350c73-6d27-42f3-8577-48540745052a?slim=true" data-test-id="beehiiv-embed" height="52" frameborder="0" scrolling="no" style="margin: 0; border-radius: 0px !important; background-color: transparent;"></iframe>
-    </div>
-    
-<div class="folks">
-   
-    <h2 class="folks_line">Read by folks at:</h2>
-    
-    <div class="folks_list">
-    <p>TechNexus Venture Collaborative</p>
-    <p>Raytheon Ventures</p>
-    <p>a16z American Dynamism</p>
-    <p>US Special Operations Command</p>
-    <p>Anduril</p>
-    <p>Marlinspike</p>
-    <p>Point72 Ventures</p>
-    <p>Army Applications Lab</p>
-    <p>Marque Ventures</p>
-    <p>AFWERX</p>  
-    <p>Hustle Fund</p>  
-    <p>And a few others...</p>
-    </div>
-    
+<div class="topbar">
+  <div class="title">4th Industries // Notes</div>
+  <div style="width:42px"></div>
 </div>
-      
-</div> <!-- COLUMN 1 ENDS -->
-   
-<!-- COLUMN 2 BEGINS --> <div class="column">
-    
-  <div class="teams_airtable_h2">
-      <h2 class="summary">Stats:</h2>
-    </div>
-    
-    <div class="teams_airtable">
-      <iframe class="airtable-embed" src="https://airtable.com/embed/appamClTO9Jn3Sd9h/shralPJDSHYk5CYNp?backgroundColor=grayLight&layout=card" frameborder="0" onmousewheel="" width="100%" height="330px" style="background: transparent; border: 1px solid #ccc; border-radius: 10px;"></iframe>
-    </div>
-          
+
+<div class="main" id="main">
+  <!-- Left -->
+  <div class="list-panel">
+    <div class="list-header">// index</div>
+    <div class="note-list" id="noteList"></div>
   </div>
-  
-</div> <!-- COLUMN 2 ENDS -->
-  
-  <div class="links">
-  <p class="links_text">Since July 4th 2023 | nathan [at] 4th [dot] industries | my <a href="https://www.linkedin.com/in/nmusso/" target="_blank" rel="noopener noreferrer">linkedin</a> | this <a href="https://github.com/ngmxyz/4th" target="_blank" rel="noopener noreferrer">github repository</a></p>
+
+  <!-- Right -->
+  <div class="read-panel">
+    <div class="read-header">
+      <button class="back-btn" onclick="goBack()">← back</button>
+      <span>// selected entry</span>
+    </div>
+    <div class="read-content" id="readContent">
+      <p class="empty">select a note to read</p>
+    </div>
+  </div>
 </div>
-  
-</div>
-
-  
-</div>
 
 
+<script>
+const notes = [
+  {
+    id: 0,
+    date: "",
+    title: "Welcome",
+    body: `Companies and projects I've been lucky enough to be a part of in some capacity.\n\nnathan [at] 4th [dot] industries`,
+    isHome: true
+  },
+  {
+    id: 4,
+    date: "2025",
+    title: "Base Power",
+    body: `Building a modern power company. I am on our Growth team.\n\nhttps://www.basepowercompany.com/`
+  },
+  {
+    id: 5,
+    date: "2024",
+    title: "Frontier",
+    body: `I'm an angel investor in Frontier. They build advanced hearing protection.\n\nhttps://www.frontieraudio.com/`
+  },
+  {
+    id: 6,
+    date: "2023",
+    title: "4th List",
+    body: `I sent a list of a few startups per week to a handful of inverstors. Companies were Pre-Seed through Series A + working on things critical to our industrial base.`
+  },
+  {
+    id: 7,
+    date: "2023",
+    title: "Caramel",
+    body: `I sourced and led diligence on Caramel when I was an Analyst at TechNexus Venture Collaborative. It is the only one I got through our Investment Committee.\n\nThey built payment rails for used vehicle sales. It was acquired by eBay about a year later.\n\nhttps://www.drivecaramel.com/`
+  },
+  {
+    id: 8,
+    date: "2022",
+    title: "DHS S&T",
+    body: `I was on a team at TechNexus that worked with the Department of Homeland Security's Science & Technology Directorate to develope wildfire sensing technology. I got to help plan and deploy wildfire sensors in Hawaii following the Maui fires.\n\nhttps://www.dhs.gov/science-and-technology/news/2024/08/09/st-marks-successful-installation-and-operationalization-fire-sensors-hawaii`
+  },
+  {
+    id: 9,
+    date: "2022",
+    title: "Technexus",
+    body: `I was an investor at TechNexus Venture Collaborative in Chicago. We invested in things that were strategically relevant to a handful of corporate partners.\n\nhttps://technexus.com/`
+  },
+  {
+    id: 10,
+    date: "2020",
+    title: "Smugglers",
+    body: `I started an alcohol delivery company after college. We grew to operations in a few states during COVID.`
+  }
+];
 
-</body>         
+let activeId = 0;
+
+const noteList = document.getElementById('noteList');
+const readContent = document.getElementById('readContent');
+const main = document.getElementById('main');
+const backBtn = document.getElementById('backBtn');
+
+function renderList() {
+  noteList.innerHTML = notes.map(n => `
+    <div class="note-item ${n.id === activeId ? 'active' : ''}" onclick="select(${n.id})">
+      <div class="note-date">${n.date}</div>
+      <div class="note-title">${n.title}</div>
+    </div>
+  `).join('');
+}
+
+function renderEntry(note) {
+  readContent.innerHTML = `
+    ${note.date ? `<div class="entry-date">${note.date}</div>` : ''}
+    <div class="entry-title">${note.title}</div>
+    <div class="entry-body">${note.body}</div>
+  `;
+}
+
+function select(id) {
+  activeId = id;
+  const note = notes.find(n => n.id === id);
+  renderEntry(note);
+  renderList();
+
+  // Mobile: switch to detail view
+  if (window.innerWidth <= 640) {
+    main.classList.add('mobile-detail');
+  }
+}
+
+function goBack() {
+  activeId = 0;
+  renderEntry(notes[0]);
+  renderList();
+  main.classList.remove('mobile-detail');
+}
+
+// Init
+renderList();
+renderEntry(notes[0]);
+</script>
+</body>
 </html>
