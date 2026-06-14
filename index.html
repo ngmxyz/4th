@@ -3,333 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOTES // TERMINAL</title>
+<title>4th Industries</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  :root {
-    --bg: #0e0e0e;
-    --panel: #0e0e0e;
-    --border: #AB3C3C;
-    --text: #00B5A3;
-    --dim: #00B5A3;
-    --hover: #004F47;
-    --active: #023B33;
-    --glow: rgba(100,140,100,0.08);
-  }
-
   body {
-    font-family: 'Share Tech Mono', monospace;
-    background: var(--bg);
-    color: var(--text);
-    height: 100vh;
-    overflow: hidden;
-    user-select: none;
+    font-family: 'IBM Plex Mono', monospace;
+    background: #f4f1ea;
+    color: #2b2b2b;
+    min-height: 100vh;
+    padding: 40px 24px;
+    line-height: 1.7;
+    font-size: 15px;
   }
 
-  /* Scanline overlay */
-  body::after {
-    content: '';
-    position: fixed; inset: 0;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 2px,
-      rgba(0,0,0,0.15) 2px,
-      rgba(0,0,0,0.15) 4px
-    );
-    pointer-events: none;
-    z-index: 100;
+  .terminal {
+    max-width: 640px;
+    margin: 8vh auto 0;
   }
 
-  /* CRT flicker */
-  @keyframes flicker {
-    0%, 100% { opacity: 1; }
-    92% { opacity: 1; }
-    93% { opacity: 0.85; }
-    94% { opacity: 1; }
-    96% { opacity: 0.9; }
-    97% { opacity: 1; }
-  }
-  .crt { animation: flicker 4s infinite; }
+  .line { white-space: pre-wrap; }
 
+  .name { font-weight: 500; }
 
+  .muted { color: #6b6b6b; }
 
-  /* Top bar */
-  .topbar {
-    border-bottom: 1px solid var(--border);
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--panel);
-    box-shadow: 0 0 10px var(--glow);
-    flex-shrink: 0;
-  }
-  .topbar .dots { display: flex; gap: 6px; }
-  .topbar .dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    border: 1px solid var(--dim);
-    background: transparent;
-  }
-  .topbar .title { font-size: 13px; color: var(--dim); letter-spacing: 2px; text-transform: uppercase; }
-
-  /* Main layout */
-  .main {
-    display: flex;
-    height: calc(100vh - 41px);
+  .rule {
+    border: none;
+    border-top: 1px solid #cfc9bd;
+    margin: 18px 0;
   }
 
-  /* Left panel - note list */
-  .list-panel {
-    width: 380px;
-    min-width: 280px;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    background: var(--panel);
-    box-shadow: 2px 0 12px var(--glow);
-  }
-  .list-header {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--dim);
-    font-size: 11px;
-    color: var(--dim);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  .note-list { flex: 1; overflow-y: auto; }
-  .note-list::-webkit-scrollbar { width: 6px; }
-  .note-list::-webkit-scrollbar-track { background: var(--bg); }
-  .note-list::-webkit-scrollbar-thumb { background: var(--dim); }
+  a { color: #2b2b2b; text-decoration: none; border-bottom: 1px solid #cfc9bd; }
+  a:hover { border-bottom-color: #2b2b2b; }
 
-  .note-item {
-    padding: 14px 16px;
-    border-bottom: 1px solid #1a2a1a;
-    cursor: pointer;
-    transition: background 0.15s;
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1.1em;
+    background: #2b2b2b;
+    vertical-align: text-bottom;
+    margin-left: 2px;
+    animation: blink 1.1s steps(1) infinite;
   }
-  .note-item:hover { background: var(--hover); }
-  .note-item.active { background: var(--active); border-left: 3px solid var(--border); }
-  .note-item .note-date { font-size: 10px; color: var(--dim); margin-bottom: 4px; }
-  .note-item .note-title { font-size: 13px; color: var(--text); }
-
-  /* Right panel - reading pane */
-  .read-panel {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  .read-header {
-    padding: 12px 24px;
-    border-bottom: 1px solid var(--dim);
-    font-size: 11px;
-    color: var(--dim);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    background: var(--panel);
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .back-btn {
-    display: inline-flex;
-    padding: 4px 10px;
-    font-family: inherit;
-    font-size: 11px;
-    color: var(--dim);
-    background: none;
-    border: 1px solid var(--dim);
-    cursor: pointer;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: all 0.15s;
-    flex-shrink: 0;
-  }
-  .back-btn:hover { background: var(--hover); color: var(--text); border-color: var(--border); }
-  .read-content {
-    flex: 1;
-    padding: 32px 48px;
-    overflow-y: auto;
-    max-width: 700px;
-  }
-  .read-content::-webkit-scrollbar { width: 6px; }
-  .read-content::-webkit-scrollbar-track { background: var(--bg); }
-  .read-content::-webkit-scrollbar-thumb { background: var(--dim); }
-
-  .read-content .empty { color: var(--dim); font-size: 13px; margin-top: 40px; }
-  .read-content .entry-date { font-size: 11px; color: var(--dim); margin-bottom: 12px; }
-  .read-content .entry-title { font-size: 18px; color: var(--text); margin-bottom: 24px; border-bottom: 1px solid var(--dim); padding-bottom: 12px; }
-  .read-content .entry-body { font-size: 13px; line-height: 1.8; color: var(--text); white-space: pre-wrap; }
-
-  /* ─── MOBILE ─── */
-  .back-btn {
-    display: none;
-    padding: 10px 16px;
-    font-family: inherit;
-    font-size: 12px;
-    color: var(--text);
-    background: none;
-    border: 1px solid var(--dim);
-    cursor: pointer;
-    margin: 12px 16px 0;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    align-self: flex-start;
-  }
-  .back-btn:hover { background: var(--hover); }
-
-  @media (max-width: 640px) {
-    body { overflow: auto; }
-    .main { flex-direction: column; height: auto; min-height: calc(100vh - 41px); }
-    .list-panel {
-      width: 100%;
-      min-width: unset;
-      border-right: none;
-      border-bottom: 1px solid var(--border);
-      box-shadow: none;
-    }
-    .note-list { max-height: 50vh; }
-    .read-panel { flex: none; min-height: 50vh; }
-    .read-content { padding: 24px 20px; max-width: 100%; }
-
-    /* Mobile detail view mode */
-    .mobile-detail .list-panel { display: none; }
-    .mobile-detail .read-panel { min-height: calc(100vh - 41px); }
-    .mobile-detail .back-btn { display: flex; }
-  }
+  @keyframes blink { 50% { opacity: 0; } }
 </style>
 </head>
-<body class="crt">
+<body>
+  <div class="terminal">
+    <div class="line name">4th Industries</div>
+    <div class="line muted">Nathan Musso — nathan [at] 4th [dot] industries</div>
 
-<div class="topbar">
-  <div class="title">4th Industries // Notes</div>
-  <div style="width:42px"></div>
-</div>
+    <hr class="rule">
 
-<div class="main" id="main">
-  <!-- Left -->
-  <div class="list-panel">
-    <div class="list-header">// index</div>
-    <div class="note-list" id="noteList"></div>
+    <div class="line">Currently: Growth @ Base Power Company</div>
+    <div class="line">Prev: Investor @ Technexus Venture Collaborative</div>
+    <div class="line">Prev: Founder @ Smugglers</div>
+    <div class="line">Rhodes College Alum and backup field goal kicker</div>
+
+    <hr class="rule">
+
+    <div class="line muted">Sometimes angel investing.</div>
+    <div class="line muted">Currently interested in metaethics, emerging markets, and weird business models.<span class="cursor"></span></div>
   </div>
-
-  <!-- Right -->
-  <div class="read-panel">
-    <div class="read-header">
-      <button class="back-btn" onclick="goBack()">← back</button>
-      <span>// selected entry</span>
-    </div>
-    <div class="read-content" id="readContent">
-      <p class="empty">select a note to read</p>
-    </div>
-  </div>
-</div>
-
-
-<script>
-const notes = [
-  {
-    id: 0,
-    date: "",
-    title: "Welcome",
-    body: `Companies and projects I've been lucky enough to be a part of in some capacity.\n\nnathan [at] 4th [dot] industries`,
-    isHome: true
-  },
-  {
-    id: 4,
-    date: "Operator // 2025 - Present",
-    title: "Base Power",
-    body: `Base is building a modern power company. I am on our Growth team.`
-  },
-  {
-    id: 5,
-    date: "Angel // 2024 - Present",
-    title: "Frontier",
-    body: `Frontier builds an advanced hearing protection for frontline workers and warfighters.`
-  },
-  {
-    id: 6,
-    date: "Writer // 2023 - 2025",
-    title: "4th List",
-    body: `I sent a list of a few startups per week to a handful of inverstors.\n\nCompanies were Pre-Seed - Series A and working on things critical to our industrial base.`
-  },
-  {
-    id: 7,
-    date: "Investor // 2023 - 2025",
-    title: "Caramel",
-    body: `Caramel built payment rails for used vehicle sales.\n\nI sourced and led diligence on Caramel when I was an Analyst at TechNexus Venture Collaborative. It was acquired by eBay about a year later.`
-  },
-  {
-    id: 8,
-    date: "Operator // 2023 - 2025",
-    title: "DHS S&T",
-    body: `I was on a team at TechNexus that worked with the Department of Homeland Security's Science & Technology Directorate to develope wildfire sensing technology.\n\nI got to help plan and deploy wildfire sensors in Hawaii after the Maui fires.`
-  },
-  {
-    id: 9,
-    date: "Investor // 2022 - 2025",
-    title: "Technexus",
-    body: `We invested in things that were strategically relevant to a handful of corporate partners.`
-  },
-  {
-    id: 10,
-    date: "Founder // 2020 - 2022",
-    title: "Smugglers",
-    body: `I started an alcohol delivery company after college. We grew to operations in a few states during COVID.`
-  }
-];
-
-let activeId = 0;
-
-const noteList = document.getElementById('noteList');
-const readContent = document.getElementById('readContent');
-const main = document.getElementById('main');
-const backBtn = document.getElementById('backBtn');
-
-function renderList() {
-  noteList.innerHTML = notes.map(n => `
-    <div class="note-item ${n.id === activeId ? 'active' : ''}" onclick="select(${n.id})">
-      <div class="note-date">${n.date}</div>
-      <div class="note-title">${n.title}</div>
-    </div>
-  `).join('');
-}
-
-function renderEntry(note) {
-  readContent.innerHTML = `
-    ${note.date ? `<div class="entry-date">${note.date}</div>` : ''}
-    <div class="entry-title">${note.title}</div>
-    <div class="entry-body">${note.body}</div>
-  `;
-}
-
-function select(id) {
-  activeId = id;
-  const note = notes.find(n => n.id === id);
-  renderEntry(note);
-  renderList();
-
-  // Mobile: switch to detail view
-  if (window.innerWidth <= 640) {
-    main.classList.add('mobile-detail');
-  }
-}
-
-function goBack() {
-  activeId = 0;
-  renderEntry(notes[0]);
-  renderList();
-  main.classList.remove('mobile-detail');
-}
-
-// Init
-renderList();
-renderEntry(notes[0]);
-</script>
 </body>
 </html>
