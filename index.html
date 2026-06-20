@@ -53,7 +53,7 @@
     <div class="line">prev: founder @ smugglers</div>
     <div class="line">rhodes college alum</div>
     <hr class="rule">
-    <div class="line muted">sometimes angel investing. interested in learning about hardware, emerging markets, and value change theory.</div>
+    <div class="line muted">sometimes angel investing. interested in hardware and emerging markets.</div>
     <hr class="rule">
     <div class="line muted">nathan [at] 4th [dot] industries</div>
   </div>
@@ -74,8 +74,9 @@
       const cursor = document.createElement('span');
       cursor.className = 'cursor';
 
-      const CHAR_MS = 2;
+      const CHAR_MS = 12;
       const LINE_MS = 18;
+      const CHUNK = 5;
 
       let i = 0;
       function typeNode() {
@@ -93,8 +94,8 @@
         let c = 0;
         function typeChar() {
           if (c < item.text.length) {
-            cursor.insertAdjacentText('beforebegin', item.text[c]);
-            c++;
+            cursor.insertAdjacentText('beforebegin', item.text.substr(c, CHUNK));
+            c += CHUNK;
             setTimeout(typeChar, CHAR_MS);
           } else {
             i++;
