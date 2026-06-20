@@ -9,8 +9,8 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'IBM Plex Mono', monospace;
-    background: #f4f1ea;
-    color: #2b2b2b;
+    background: #f3ede0;
+    color: #2d2820;
     min-height: 100vh;
     padding: 40px 24px;
     line-height: 1.7;
@@ -19,22 +19,23 @@
   .terminal {
     max-width: 640px;
     margin: 8vh auto 0;
+    min-height: 320px;
   }
   .line { white-space: pre-wrap; }
-  .name { font-weight: 500; }
-  .muted { color: #6b6b6b; }
+  .name { font-weight: 500; color: #8a6a22; }
+  .muted { color: #7f7560; }
   .rule {
     border: none;
-    border-top: 1px solid #cfc9bd;
+    border-top: 1px solid #dcd1bc;
     margin: 18px 0;
   }
-  a { color: #2b2b2b; text-decoration: none; border-bottom: 1px solid #cfc9bd; }
-  a:hover { border-bottom-color: #2b2b2b; }
+  a { color: #2d2820; text-decoration: none; border-bottom: 1px solid #dcd1bc; }
+  a:hover { border-bottom-color: #2d2820; }
   .cursor {
     display: inline-block;
     width: 8px;
     height: 1.1em;
-    background: #2b2b2b;
+    background: #8a6a22;
     vertical-align: text-bottom;
     margin-left: 2px;
     animation: blink 1.1s steps(1) infinite;
@@ -43,7 +44,7 @@
 </style>
 </head>
 <body>
-  <div class="terminal">
+  <div class="terminal" id="terminal">
     <div class="line name">4th Industries</div>
     <div class="line muted">Nathan Musso</div>
     <hr class="rule">
@@ -54,7 +55,56 @@
     <hr class="rule">
     <div class="line muted">Sometimes angel investing. Interested in learning about hardware, emerging markets, and value change theory.</div>
     <hr class="rule">
-    <div class="line muted">nathan [at] 4th [dot] industries<span class="cursor"></span></div>
+    <div class="line muted">nathan [at] 4th [dot] industries</div>
   </div>
+
+  <script>
+    (function () {
+      const term = document.getElementById('terminal');
+      const nodes = Array.from(term.children);
+
+      const items = nodes.map(node => {
+        if (node.tagName === 'HR') return { node, type: 'hr' };
+        const text = node.textContent;
+        node.textContent = '';
+        return { node, type: 'text', text };
+      });
+      term.style.visibility = 'visible';
+
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+
+      const CHAR_MS = 18;
+      const LINE_MS = 160;
+
+      let i = 0;
+      function typeNode() {
+        if (i >= items.length) {
+          items[items.length - 1].node.appendChild(cursor);
+          return;
+        }
+        const item = items[i];
+        if (item.type === 'hr') {
+          i++;
+          setTimeout(typeNode, LINE_MS);
+          return;
+        }
+        item.node.appendChild(cursor);
+        let c = 0;
+        function typeChar() {
+          if (c < item.text.length) {
+            cursor.insertAdjacentText('beforebegin', item.text[c]);
+            c++;
+            setTimeout(typeChar, CHAR_MS);
+          } else {
+            i++;
+            setTimeout(typeNode, LINE_MS);
+          }
+        }
+        typeChar();
+      }
+      typeNode();
+    })();
+  </script>
 </body>
 </html>
